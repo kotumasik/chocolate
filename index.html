@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chocolate Customizer</title>
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        font-family: 'Montserrat', Arial, sans-serif;
+        background: linear-gradient(135deg, #1c1c1c 0%, #2f2f2f 100%);
+        color: #f5f5f5;
+    }
+    header {
+        background: linear-gradient(90deg, #111 60%, #f2c94c 100%);
+        padding: 40px 0;
+        text-align: center;
+        font-size: 3rem;
+        font-family: 'Russo One', Arial, sans-serif;
+        color: #f2c94c;
+        letter-spacing: 6px;
+        text-shadow: 0 6px 24px #000, 0 1px 0 #fff2;
+        border-bottom: 4px solid #f2c94c;
+    }
+    main {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 60px;
+        padding: 60px 20px;
+        flex-wrap: wrap;
+    }
+    .choco-preview-area {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+    .chocolate-shell {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        transition: all 0.6s cubic-bezier(.77,0,.18,1.01);
+        box-shadow: 0 18px 64px #000c, 0 2px 8px #f2c94c33;
+        cursor: pointer;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+    .chocolate-core {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: 8px solid #fff3;
+        box-shadow: 0 8px 32px #000b, 0 2px 8px #fff2 inset;
+        font-family: 'Russo One', Arial, sans-serif;
+        font-weight: bold;
+        text-align: center;
+        user-select: none;
+        transition: all 0.6s;
+        position: relative;
+    }
+    .choco-icon {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 12px;
+    }
+    .price-tag {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        background: linear-gradient(90deg, #f2c94c 60%, #fffbe6 100%);
+        color: #7a4a00;
+        font-family: 'Russo One', Arial, sans-serif;
+        font-size: 1.4rem;
+        font-weight: bold;
+        border-radius: 16px;
+        padding: 8px 22px;
+        box-shadow: 0 2px 12px #0007;
+    }
+    .size-group {
+        display: flex;
+        gap: 18px;
+    }
+    .size-btn {
+        background: #181818;
+        color: #f2c94c;
+        border: 2px solid #f2c94c99;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-family: 'Russo One', Arial, sans-serif;
+        font-weight: 700;
+        padding: 10px 26px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .size-btn.active, .size-btn:hover {
+        background: #f2c94c;
+        color: #181818;
+        border: 2px solid #fffbe6;
+    }
+    .controls-panel {
+        background: #232323e6;
+        border-radius: 32px;
+        box-shadow: 0 10px 32px #000c, 0 2px 8px #f2c94c33;
+        padding: 40px;
+        min-width: 380px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+    .controls-title {
+        font-size: 2rem;
+        font-family: 'Russo One', Arial, sans-serif;
+        color: #f2c94c;
+        text-align: center;
+        letter-spacing: 2px;
+    }
+    .control-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        position: relative;
+    }
+    label {
+        font-size: 1.1rem;
+        color: #f2c94c;
+        font-weight: 700;
+    }
+    select, input[type="color"] {
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: 2px solid #f2c94c55;
+        background: #181818;
+        color: #f2c94c;
+        font-weight: 700;
+        font-family: 'Montserrat', Arial, sans-serif;
+        transition: all 0.3s;
+    }
+    input[type="color"] { width: 60px; height: 40px; border: 3px solid #f2c94c; padding: 0; cursor:pointer; }
+    footer {
+        text-align: center;
+        padding: 24px 0;
+        color: #f2c94c99;
+        background: linear-gradient(90deg, #111 60%, #f2c94c 100%);
+        border-top: 4px solid #f2c94c;
+        font-family: 'Russo One', Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<header>CHOCOLATE CUSTOMIZER</header>
+<main>
+    <div class="choco-preview-area">
+        <div class="chocolate-shell" id="shell">
+            <div class="chocolate-core" id="core">
+                <span class="choco-icon" id="chocoIcon"></span>
+                <span id="chocoLabel">Темний шоколад</span>
+                <span class="price-tag" id="priceTag">₴45</span>
+            </div>
+        </div>
+        <div class="size-group">
+            <button class="size-btn active" data-size="large">Велика</button>
+            <button class="size-btn" data-size="medium">Середня</button>
+            <button class="size-btn" data-size="small">Маленька</button>
+        </div>
+    </div>
+    <div class="controls-panel">
+        <div class="controls-title">Налаштування шоколаду</div>
+        <div class="control-group">
+            <label for="chocoType">Тип шоколаду:</label>
+            <select id="chocoType">
+                <option value="dark">Темний</option>
+                <option value="milk">Молочний</option>
+                <option value="white">Білий</option>
+                <option value="ruby">Рубіновий</option>
+                <option value="caramel">Карамельний</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label for="shellColor">Колір оболонки:</label>
+            <input type="color" id="shellColor" value="#b87333">
+        </div>
+        <div class="control-group">
+            <label for="shellShape">Форма оболонки:</label>
+            <select id="shellShape">
+                <option value="circle">Коло</option>
+                <option value="square">Квадрат</option>
+                <option value="ellipse">Еліпс</option>
+                <option value="hex">Шестикутник</option>
+                <option value="star">Зірка</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label for="shellTexture">Текстура оболонки:</label>
+            <select id="shellTexture">
+                <option value="none">Гладка</option>
+                <option value="dots">Крапки</option>
+                <option value="stripes">Смуги</option>
+                <option value="waves">Хвилі</option>
+                <option value="grid">Сітка</option>
+            </select>
+        </div>
+    </div>
+</main>
+<footer>© 2025 Chocolate Customizer</footer>
+
+<script>
+    const core = document.getElementById('core');
+    const shell = document.getElementById('shell');
+    const chocoType = document.getElementById('chocoType');
+    const shellColor = document.getElementById('shellColor');
+    const shellShape = document.getElementById('shellShape');
+    const shellTexture = document.getElementById('shellTexture');
+    const chocoIcon = document.getElementById('chocoIcon');
+    const chocoLabel = document.getElementById('chocoLabel');
+    const priceTag = document.getElementById('priceTag');
+    const sizeBtns = document.querySelectorAll('.size-btn');
+
+    const sizeMap = {
+        large: { shell: 520, core: 340, priceMult: 1 },
+        medium: { shell: 340, core: 210, priceMult: 0.7 },
+        small: { shell: 200, core: 120, priceMult: 0.5 }
+    };
+    let currentSize = 'large';
+
+    const priceMap = { dark: 45, milk: 42, white: 48, ruby: 60, caramel: 55 };
+
+    const icons = {
+        dark: `<svg viewBox="0 0 64 64" fill="none"><ellipse cx="32" cy="32" rx="28" ry="28" fill="#3e2723"/><ellipse cx="32" cy="32" rx="20" ry="20" fill="#6d4c41"/></svg>`,
+        milk: `<svg viewBox="0 0 64 64" fill="none"><rect x="8" y="8" width="48" height="48" rx="12" fill="#a97c50"/><rect x="16" y="16" width="32" height="32" rx="8" fill="#d7b899"/></svg>`,
+        white: `<svg viewBox="0 0 64 64" fill="none"><ellipse cx="32" cy="32" rx="28" ry="20" fill="#fffbe6"/><ellipse cx="32" cy="32" rx="18" ry="12" fill="#f3e5ab"/></svg>`,
+        ruby: `<svg viewBox="0 0 64 64" fill="none"><polygon points="32,8 56,32 32,56 8,32" fill="#e0115f"/><polygon points="32,16 48,32 32,48 16,32" fill="#f06292"/></svg>`,
+        caramel: `<svg viewBox="0 0 64 64" fill="none"><ellipse cx="32" cy="36" rx="24" ry="16" fill="#ffd59a"/><ellipse cx="32" cy="32" rx="16" ry="10" fill="#c97c2f"/></svg>`
+    };
+
+    function updateChocolate() {
+        let type = chocoType.value;
+        const coreStyles = {
+            dark: { bg: 'radial-gradient(circle at 70% 30%, #4e2e1e 0%, #1b0c00 100%)', color: '#fff', border:'#3e2723', label:'Темний шоколад' },
+            milk: { bg: 'radial-gradient(circle at 30% 70%, #a97c50 0%, #6b4226 100%)', color:'#fff', border:'#a97c50', label:'Молочний шоколад' },
+            white: { bg: 'radial-gradient(circle at 60% 40%, #fffbe6 0%, #f3e5ab 100%)', color:'#222', border:'#f3e5ab', label:'Білий шоколад' },
+            ruby: { bg: 'radial-gradient(circle at 40% 60%, #e0115f 0%, #a8004f 100%)', color:'#fff', border:'#e0115f', label:'Рубіновий шоколад' },
+            caramel: { bg: 'radial-gradient(circle at 60% 40%, #ffd59a 0%, #c97c2f 100%)', color:'#7a4a00', border:'#ffd59a', label:'Карамельний шоколад' }
+        };
+        core.style.background = coreStyles[type].bg;
+        core.style.color = coreStyles[type].color;
+        core.style.borderColor = coreStyles[type].border;
+        chocoLabel.textContent = coreStyles[type].label;
+        chocoIcon.innerHTML = icons[type];
+
+        priceTag.textContent = `₴${Math.round(priceMap[type]*sizeMap[currentSize].priceMult)}`;
+
+        shell.style.background = shellColor.value;
+
+        // Shape
+        const shapeMap = {
+            circle:'50%',
+            square:'32px',
+            ellipse:'50% / 35%',
+            hex:'0',
+            star:'0'
+        };
+        shell.style.borderRadius = shapeMap[shellShape.value];
+        if(shellShape.value==='hex') shell.style.clipPath='polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%)';
+        else if(shellShape.value==='star') shell.style.clipPath='polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)';
+        else shell.style.clipPath='none';
+
+        // Texture
+        const textures = {
+            none:'',
+            dots:'radial-gradient(circle at 30px 30px, #fff5 4px, transparent 5px), radial-gradient(circle at 90px 90px, #fff5 4px, transparent 5px)',
+            stripes:'repeating-linear-gradient(135deg, #fff2 0 16px, transparent 16px 32px)',
+            waves:'repeating-radial-gradient(circle at 50% 50%, #fff3 0 8px, transparent 8px 24px)',
+            grid:'repeating-linear-gradient(0deg, #fff2 0 6px, transparent 6px 32px), repeating-linear-gradient(90deg, #fff2 0 6px, transparent 6px 32px)'
+        };
+        shell.style.backgroundImage = textures[shellTexture.value];
+
+        // Size
+        shell.style.width = shell.style.height = sizeMap[currentSize].shell+'px';
+        core.style.width = core.style.height = sizeMap[currentSize].core+'px';
+        core.style.fontSize = (sizeMap[currentSize].core/14)+'px';
+        chocoIcon.style.width = chocoIcon.style.height = (sizeMap[currentSize].core/4.5)+'px';
+    }
+
+    chocoType.addEventListener('change', updateChocolate);
+    shellColor.addEventListener('input', updateChocolate);
+    shellShape.addEventListener('change', updateChocolate);
+    shellTexture.addEventListener('change', updateChocolate);
+    sizeBtns.forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+            sizeBtns.forEach(b=>b.classList.remove('active'));
+            btn.classList.add('active');
+            currentSize = btn.dataset.size;
+            updateChocolate();
+        });
+    });
+
+    updateChocolate();
+</script>
+</body>
+</html>
